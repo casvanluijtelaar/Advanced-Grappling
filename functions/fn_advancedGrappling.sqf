@@ -63,7 +63,7 @@ AOW_Add_Player_Event_Handlers = {
 		private _projectile = _this select 6;
 
 		// only handle events for ammo fired from this package
-		if(_ammo != "G_40mm_GRAPPEL" && _ammo != "G_GRAPPEL") exitWith {false;};
+		if(_ammo != "G_40mm_Grappling_Hook" && _ammo != "G_Grappling_Hook") exitWith {false;};
 
 		// ignore when not fired on foot
 		if(vehicle _player != _player) exitWith {false;};

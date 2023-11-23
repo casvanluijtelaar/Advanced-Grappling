@@ -1,7 +1,7 @@
 class CfgAmmo
 {
 
-	class GrenadeBase;
+    class GrenadeBase;
 
     // throwable grappling hook
     class G_Grappling_Hook : GrenadeBase
@@ -18,9 +18,9 @@ class CfgAmmo
         indirectHit = 0;
         model = "\A3\weapons_f\ammo\flare_white";
         simulation = "shotShell";
-        soundHit[] = {"",0,0};
-        soundFly[] = {"",0,0};
-        soundEngine[] = {"",0,0};
+        soundHit[] = {"", 0, 0};
+        soundFly[] = {"", 0, 0};
+        soundEngine[] = {"", 0, 0};
         suppressionRadiusHit = 0;
         timeToLive = 10;
         typicalSpeed = 22;
@@ -46,7 +46,6 @@ class CfgAmmo
             duration = 0;
             frequency = 0;
         };
-        
     };
 
     // grenade launcher grappling hook
@@ -65,20 +64,20 @@ class CfgAmmo
         maxSpeed = 100;
         model = "\A3\weapons_f\ammo\UGL_slug";
         simulation = "shotShell";
-        soundHit[] = {"",0,0};
-        soundFly[] = {"",0,0};
-        soundEngine[] = {"",0,0};
+        soundHit[] = {"", 0, 0};
+        soundFly[] = {"", 0, 0};
+        soundEngine[] = {"", 0, 0};
         suppressionRadiusHit = 0;
         timeToLive = 10;
         typicalSpeed = 22;
         warheadName = "GRAPPLING HOOK";
         whistleDist = 0;
-		soundHit1[] = {};
-		soundHit2[] = {};
-		soundHit3[] = {};
-		soundHit4[] = {};
-		multiSoundHit[] = {"soundHit1",0.25,"soundHit2",0.25,"soundHit3",0.25,"soundHit4",0.25};
-    
+        soundHit1[] = {};
+        soundHit2[] = {};
+        soundHit3[] = {};
+        soundHit4[] = {};
+        multiSoundHit[] = {"soundHit1", 0.25, "soundHit2", 0.25, "soundHit3", 0.25, "soundHit4", 0.25};
+
         class CamShakeFire
         {
             power = 0;

@@ -7,7 +7,7 @@ class CfgMagazines {
 		displayName = "40mm Grappling Hook Round";
 		displayNameShort = "Grappling Hook";
 		picture = "\A3\Weapons_f\Data\ui\gear_UGL_slug_CA.paa";
-		ammo = "G_40mm_GRAPPEL";
+		ammo = "G_40mm_Grappling_Hook";
 		initSpeed = 80;
 		count = 1;
 		nameSound = "";
@@ -29,6 +29,6 @@ class CfgMagazines {
 		displayNameShort = "Grappling Hook";
 		model = "\A3\weapons_f\ammo\flare_white";
         picture = "\A3\Weapons_F\Data\UI\gear_flare_white_ca.paa";
-		ammo = "G_GRAPPEL";
+		ammo = "G_Grappling_Hook";
 	};
 };
