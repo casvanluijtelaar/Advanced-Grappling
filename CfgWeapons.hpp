@@ -1,5 +1,6 @@
-class CfgWeapons {
-	class GrenadeLauncher;
+class CfgWeapons
+{
+    class GrenadeLauncher;
     class Throw : GrenadeLauncher
     {
         muzzles[] += {"Grenade_Grappel_Muzzle"};
@@ -7,7 +8,7 @@ class CfgWeapons {
         class ThrowMuzzle;
         class Grenade_Grappel_Muzzle : ThrowMuzzle
         {
-            magazines[] = {"Grenade_Grappel_Magazine"};
+            magazines[] = {"Grenade_Grappling_Hook"};
         };
     };
 };

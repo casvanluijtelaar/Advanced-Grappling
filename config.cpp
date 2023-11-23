@@ -12,16 +12,21 @@ class CfgPatches
 	};
 };
 
-
-class CfgFunctions 
+class CfgFunctions
 {
 	class SA
 	{
 		class AdvancedGrappling
 		{
 			file = "\AOW_AdvancedGrappling\functions";
-			class advancedGrappling { postInit=1; };
-			class advancedUrbanRappellingOverrides {postInit=1;};
+			class advancedGrappling
+			{
+				postInit = 1;
+			};
+			class advancedUrbanRappellingOverrides
+			{
+				postInit = 1;
+			};
 		};
 	};
 };

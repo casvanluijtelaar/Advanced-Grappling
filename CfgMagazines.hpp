@@ -20,7 +20,7 @@ class CfgMagazines
 		deleteIfEmpty = 0;
 	};
 
-	class HandGrenade; 
+	class HandGrenade;
 	class Grenade_Grappling_Hook : HandGrenade
 	{
 		author = "supercas240";
