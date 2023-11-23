@@ -154,10 +154,9 @@ AOW_Rappel = {
 	params ["_player","_rappelPoint","_rappelDirection","_ropeLength"];
 
 	_player setVariable ["AUR_Is_Rappelling",true,true];
-	_playerPosition = getPosASL _player;
+	_playerStartPosition = (getPosASL _player) vectorAdd [0,0,2];
 	_playerPreRappelPosition = _rappelPoint; 
 	
-	_playerStartPosition = _playerPosition vectorAdd (_rappelDirection vectorMultiply 2);
 	_player setPosWorld _playerStartPosition;
 	
 	// Create anchor for rope (at rappel point)
@@ -176,11 +175,11 @@ AOW_Rappel = {
 	
 	[[_player,_rappelDevice,_anchor],"AUR_Play_Rappelling_Sounds_Global"] call AUR_RemoteExecServer;
 	
-	_rope2 = ropeCreate [_rappelDevice, [-0.15,0,0], _ropeLength - 1];
-	_rope2 allowDamage false;
-	_rope1 = ropeCreate [_rappelDevice, [0,0.15,0], _anchor, [0, 0, 0], 1];
+	_rope1 = ropeCreate [_rappelDevice, [0,0.15,0], _anchor, [0, 0, 0], _ropeLength - 2];
 	_rope1 allowDamage false;
-	
+	_rope2 = ropeCreate [_rappelDevice, [-0.15,0,0], 2];
+	_rope2 allowDamage false;
+
 	_anchor setPosWorld _rappelPoint;
 
 	_player setVariable ["AUR_Rappel_Rope_Top",_rope1];
@@ -195,73 +194,63 @@ AOW_Rappel = {
 	_gravityAccelerationVec = [0,0,-9.8];
 	_velocityVec = [0,0,0];
 	_lastTime = diag_tickTime;
-	_lastPosition = AGLtoASL (_playerStartPosition vectorAdd [0,0,2]);
+	_lastPosition = _playerStartPosition;
 	
 	_decendRopeKeyDownHandler = -1;
 	_ropeKeyUpHandler = -1;
-	if(_player == player) then {	
-		_decendRopeKeyDownHandler = (findDisplay 46) displayAddEventHandler ["KeyDown", {
-			private ["_topRope","_bottomRope"];
-			if(_this select 1 in (actionKeys "MoveBack")) then {
-				_ropeLength = player getVariable ["AUR_Rappel_Rope_Length",100];
-				_topRope = player getVariable ["AUR_Rappel_Rope_Top",nil];
-				if(!isNil "_topRope") then {
-					ropeUnwind [ _topRope, 1.5, ((ropeLength _topRope) + 0.1) min _ropeLength];
-				};
-				_bottomRope = player getVariable ["AUR_Rappel_Rope_Bottom",nil];
-				if(!isNil "_bottomRope") then {
-					ropeUnwind [ _bottomRope, 1.5, ((ropeLength _bottomRope) - 0.1) max 0];
-				};
+
+	_decendRopeKeyDownHandler = (findDisplay 46) displayAddEventHandler ["KeyDown", {
+		private ["_topRope","_bottomRope"];
+		if(_this select 1 in (actionKeys "MoveBack")) then {
+			_ropeLength = player getVariable ["AUR_Rappel_Rope_Length",100];
+			_topRope = player getVariable ["AUR_Rappel_Rope_Top",nil];
+			if(!isNil "_topRope") then {
+				ropeUnwind [ _topRope, 1.5, ((ropeLength _topRope) + 0.1) min _ropeLength];
 			};
-			if(_this select 1 in (actionKeys "MoveForward")) then {
-				_ropeLength = player getVariable ["AUR_Rappel_Rope_Length",100];
-				_topRope = player getVariable ["AUR_Rappel_Rope_Top",nil];
-				if(!isNil "_topRope") then {
-					ropeUnwind [ _topRope, 0.3, ((ropeLength _topRope) - 0.1) min _ropeLength];
-				};
-				_bottomRope = player getVariable ["AUR_Rappel_Rope_Bottom",nil];
-				if(!isNil "_bottomRope") then {
-					ropeUnwind [ _bottomRope, 0.3, ((ropeLength _bottomRope) + 0.1) max 0];
-				};
+			_bottomRope = player getVariable ["AUR_Rappel_Rope_Bottom",nil];
+			if(!isNil "_bottomRope") then {
+				ropeUnwind [ _bottomRope, 1.5, ((ropeLength _bottomRope) - 0.1) max 0];
 			};
-			if(_this select 1 in (actionKeys "Turbo") && player getVariable ["AUR_JUMP_PRESSED_START",0] == 0) then {
-				player setVariable ["AUR_JUMP_PRESSED_START",diag_tickTime];
-			};
-			
-			if(_this select 1 in (actionKeys "TurnRight")) then {
-				player setVariable ["AUR_RIGHT_DOWN",true];
-			};
-			if(_this select 1 in (actionKeys "TurnLeft")) then {
-				player setVariable ["AUR_LEFT_DOWN",true];
-			};
-		}];
-		_ropeKeyUpHandler = (findDisplay 46) displayAddEventHandler ["KeyUp", {
-			if(_this select 1 in (actionKeys "Turbo")) then {
-				player setVariable ["AUR_JUMP_PRESSED",true];
-				player setVariable ["AUR_JUMP_PRESSED_TIME",diag_tickTime - (player getVariable ["AUR_JUMP_PRESSED_START",diag_tickTime])];
-				player setVariable ["AUR_JUMP_PRESSED_START",0];	
-			};
-			if(_this select 1 in (actionKeys "TurnRight")) then {
-				player setVariable ["AUR_RIGHT_DOWN",false];
-			};
-			if(_this select 1 in (actionKeys "TurnLeft")) then {
-				player setVariable ["AUR_LEFT_DOWN",false];
-			};
-		}];
-	} else {
-		[_rope1,_rope2] spawn {
-			params ["_rope1","_rope2"];
-			sleep 1;
-			_randomSpeedFactor = ((random 10) - 5) / 10;
-			ropeUnwind [ _rope1, 2 + _randomSpeedFactor, (ropeLength _rope1) + (ropeLength _rope2)];
-			ropeUnwind [ _rope2, 2 + _randomSpeedFactor, 0];
 		};
-	};
+		if(_this select 1 in (actionKeys "MoveForward")) then {
+			_ropeLength = player getVariable ["AUR_Rappel_Rope_Length",100];
+			_topRope = player getVariable ["AUR_Rappel_Rope_Top",nil];
+			if(!isNil "_topRope") then {
+				ropeUnwind [ _topRope, 1, ((ropeLength _topRope) - 0.3) min _ropeLength];
+			};
+			_bottomRope = player getVariable ["AUR_Rappel_Rope_Bottom",nil];
+			if(!isNil "_bottomRope") then {
+				ropeUnwind [ _bottomRope, 1, ((ropeLength _bottomRope) + 0.3) max 0];
+			};
+		};
+		if(_this select 1 in (actionKeys "Turbo") && player getVariable ["AUR_JUMP_PRESSED_START",0] == 0) then {
+			player setVariable ["AUR_JUMP_PRESSED_START",diag_tickTime];
+		};
+		
+		if(_this select 1 in (actionKeys "TurnRight")) then {
+			player setVariable ["AUR_RIGHT_DOWN",true];
+		};
+		if(_this select 1 in (actionKeys "TurnLeft")) then {
+			player setVariable ["AUR_LEFT_DOWN",true];
+		};
+	}];
+	_ropeKeyUpHandler = (findDisplay 46) displayAddEventHandler ["KeyUp", {
+		if(_this select 1 in (actionKeys "Turbo")) then {
+			player setVariable ["AUR_JUMP_PRESSED",true];
+			player setVariable ["AUR_JUMP_PRESSED_TIME",diag_tickTime - (player getVariable ["AUR_JUMP_PRESSED_START",diag_tickTime])];
+			player setVariable ["AUR_JUMP_PRESSED_START",0];	
+		};
+		if(_this select 1 in (actionKeys "TurnRight")) then {
+			player setVariable ["AUR_RIGHT_DOWN",false];
+		};
+		if(_this select 1 in (actionKeys "TurnLeft")) then {
+			player setVariable ["AUR_LEFT_DOWN",false];
+		};
+	}];
+
 	
 	_walkingOnWallForce = [0,0,0];
-	
-	_lastAiJumpTime = diag_tickTime;
-	
+		
 	while {true} do {
 	
 		_currentTime = diag_tickTime;
@@ -316,15 +305,6 @@ AOW_Rappel = {
 		_leftDown = _player getVariable ["AUR_LEFT_DOWN",false];
 		_rightDown = _player getVariable ["AUR_RIGHT_DOWN",false];
 		
-		// Simulate AI jumping off wall randomly
-		if(_player != player) then {
-			if(diag_tickTime - _lastAiJumpTime > (random 30) max 5) then {
-				_jumpPressed = true;
-				_jumpPressedTime = 0;
-				_lastAiJumpTime = diag_tickTime;
-			};
-		};
-		
 		if(_jumpPressed || _leftDown || _rightDown) then {
 			
 			// Get the surface normal of the surface the player is hanging against
@@ -372,8 +352,7 @@ AOW_Rappel = {
 
 		_lastPosition = _newPosition;
 		
-		if((getPos _player) select 2 < 1 || !alive _player || vehicle _player != _player || ropeLength _rope2 <= 1 || _player getVariable ["AUR_Climb_To_Top",false] || _player getVariable ["AUR_Detach_Rope",false] ) exitWith {};
-		
+	if(!alive _player || vehicle _player != _player || _player getVariable ["AUR_Climb_To_Top",false] || _player getVariable ["AUR_Detach_Rope",false] ) exitWith {};
 		sleep 0.01;
 	};
 

@@ -3,9 +3,6 @@
 AOW_Spawn_Rope = {
 	params ["_projectile"];
 
-	// update projectile position until it despawns
-	_projectTilePos = getPosASL _projectile;
-
 	// create hidden vegicle that we can attach a rope to.
 	_hook = createVehicle ["B_static_AA_F", player, [], 0, "CAN_COLLIDE"];
 	hideObject _hook;
@@ -13,34 +10,36 @@ AOW_Spawn_Rope = {
 	_hook allowDamage false;
 
 	// attach a rope to the hook
-	_rope = ropeCreate [_hook, [0,0,0], 5];
+	_rope = ropeCreate [_hook, [0,0,0], 100];
 	_rope allowDamage false;
 
-
+	// update the hook position to match the projectile position
 	waitUntil {
-		// update projectile position until it despawns
 		if (isNull _projectile) exitWith {true};
-		_projectTilePos = getPosASL _projectile;
-		_hook setPosWorld _projectTilePos;
-
-
-		// set the ropelength as the distance between the player and the 
-		// projectile with 10 meters slack.
-		_distanceBetweenPlayerAndProjectile = player distance _projectTilePos;
-		ropeUnwind [_rope, 20, _distanceBetweenPlayerAndProjectile, false];
-
+		_hook setPosWorld getPosASL _projectile;
 		false;
 	};
+
+	// find the highest rope segment position
+	_highestSegmentPos = [0, 0, 0];
+	{ 
+		_segmentPos = getPosASL _x;
+		if ((_segmentPos select 2) > (_highestSegmentPos select 2)) then { 
+			_highestSegmentPos = _segmentPos;
+		};
+
+	} forEach ropeSegments _rope;
 
 	// initial rope was only for visuals, we need to destroy it when replaced 
 	// with the advanced_urban_rappelling rope
 	ropeDestroy _rope;
-
+	deleteVehicle _hook;
+	 
 	// if player is already rappelling they should not be able to start another one
 	if(player getVariable ["AUR_Is_Rappelling",false])  exitWith {false};
 
-	// find a rappelpoint near the impact location of the grappling hook 
-	_grappelData = [_projectTilePos, "POSITION"] call AOW_Find_Rappel_Point;
+	// find a rappelpoint near heighest point of the rope
+	_grappelData = [_highestSegmentPos, "POSITION"] call AOW_Find_Rappel_Point;
 	if(count _grappelData == 0) exitWith {false;};
 	_grappelPoint = _grappelData select 0;
 	_grappelDirection = _grappelData select 1;
@@ -48,10 +47,10 @@ AOW_Spawn_Rope = {
     // if the grappel point is more than 20 meters away in the horizontal direction
 	// cancel the grappeling
 	if((player distance2D _grappelPoint) > 20) exitWith {false;};
-	
-	// start the advanced urbanced urban rappelling with a ropelength that is
-	// slightly longer than the vertical height
-	_ropeLength = (_grappelPoint select 2) * 1.3;
+
+
+	// start the advanced urbanced urban rappelling
+	_ropeLength = (getPosASL player) distance _grappelPoint;
 	[player, _grappelPoint, _grappelDirection, _ropeLength] call AOW_Rappel;
 };
 
