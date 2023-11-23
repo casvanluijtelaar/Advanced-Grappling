@@ -1,6 +1,8 @@
-class CfgMagazines {
+class CfgMagazines
+{
 	class 1Rnd_HE_Grenade_shell;
-	class 1Rnd_GRAPPEL_shell: 1Rnd_HE_Grenade_shell {
+	class 1Rnd_Grappling_Hook_shell : 1Rnd_HE_Grenade_shell
+	{
 		author = "supercas240";
 		scope = 2;
 		type = 16;
@@ -18,17 +20,15 @@ class CfgMagazines {
 		deleteIfEmpty = 0;
 	};
 
-	class Default;	// External class reference
-	class CA_Magazine : Default {};
-	class HandGrenade : CA_Magazine {};
-	class Grenade_Grappel_Magazine :  HandGrenade
+	class HandGrenade; 
+	class Grenade_Grappling_Hook : HandGrenade
 	{
 		author = "supercas240";
 		scope = 2;
 		displayName = "Throwable Grappling Hook";
 		displayNameShort = "Grappling Hook";
 		model = "\A3\weapons_f\ammo\flare_white";
-        picture = "\A3\Weapons_F\Data\UI\gear_flare_white_ca.paa";
+		picture = "\A3\Weapons_F\Data\UI\gear_flare_white_ca.paa";
 		ammo = "G_Grappling_Hook";
 	};
 };
