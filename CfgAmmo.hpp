@@ -1,10 +1,10 @@
 class CfgAmmo
 {
 
-    class GrenadeBase;
+    class GrenadeCore;
 
     // throwable grappling hook
-    class G_Grappling_Hook : GrenadeBase
+    class G_Grappling_Hook : GrenadeCore
     {
         aiAmmoUsageFlags = "0"; // no AI usage
         cost = 40;
@@ -12,20 +12,20 @@ class CfgAmmo
         deflecting = 0;
         explosionTime = -1;
         explosive = 0;
-        grenadeBurningSound[] = {};
-        grenadeFireSound[] = {};
         hit = 0;
         indirectHit = 0;
         model = "\A3\weapons_f\ammo\flare_white";
         simulation = "shotShell";
-        soundHit[] = {"", 0, 0};
-        soundFly[] = {"", 0, 0};
-        soundEngine[] = {"", 0, 0};
         suppressionRadiusHit = 0;
         timeToLive = 10;
         typicalSpeed = 22;
         warheadName = "GRAPPLING HOOK";
         whistleDist = 0;
+
+        soundFly[] = {"AOW_AdvancedGrappling\sounds\launch.ogg", 1, 1};
+        soundHit1[] = {"AOW_AdvancedGrappling\sounds\impact.ogg", 3.16228, 1, 1400};
+        multiSoundHit[] = {"soundHit1", 1};
+        muzzleEffect = "";
 
         class CamShakeFire
         {
@@ -49,7 +49,7 @@ class CfgAmmo
     };
 
     // grenade launcher grappling hook
-    class G_40mm_Grappling_Hook : GrenadeBase
+    class G_40mm_Grappling_Hook : GrenadeCore
     {
         aiAmmoUsageFlags = "0"; // no AI usage
         cost = 40;
@@ -57,27 +57,22 @@ class CfgAmmo
         deflecting = 0;
         explosionTime = -1;
         explosive = 0;
-        grenadeBurningSound[] = {};
-        grenadeFireSound[] = {};
         hit = 0;
         indirectHit = 0;
         maxSpeed = 100;
         model = "\A3\weapons_f\ammo\UGL_slug";
         simulation = "shotShell";
-        soundHit[] = {"", 0, 0};
-        soundFly[] = {"", 0, 0};
-        soundEngine[] = {"", 0, 0};
         suppressionRadiusHit = 0;
         timeToLive = 10;
         typicalSpeed = 22;
         warheadName = "GRAPPLING HOOK";
         whistleDist = 0;
-        soundHit1[] = {};
-        soundHit2[] = {};
-        soundHit3[] = {};
-        soundHit4[] = {};
-        multiSoundHit[] = {"soundHit1", 0.25, "soundHit2", 0.25, "soundHit3", 0.25, "soundHit4", 0.25};
 
+        soundFly[] = {"AOW_AdvancedGrappling\sounds\launch.ogg", 1, 1};
+        soundHit1[] = {"AOW_AdvancedGrappling\sounds\impact.ogg", 3.16228, 1, 1400};
+        multiSoundHit[] = {"soundHit1", 1};
+        muzzleEffect = "";
+       
         class CamShakeFire
         {
             power = 0;
