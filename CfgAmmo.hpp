@@ -22,8 +22,8 @@ class CfgAmmo
         warheadName = "GRAPPLING HOOK";
         whistleDist = 0;
 
-        soundFly[] = {"AOW_AdvancedGrappling\sounds\launch.ogg", 1, 1};
-        soundHit1[] = {"AOW_AdvancedGrappling\sounds\impact.ogg", 3.16228, 1, 1400};
+        soundFly[] = {"AOW_AdvancedGrappling\Data\sounds\launch.ogg", 3, 1, 100};
+        soundHit1[] = {"AOW_AdvancedGrappling\Data\sounds\impact.ogg", 3, 1, 100};
         multiSoundHit[] = {"soundHit1", 1};
         muzzleEffect = "";
 
@@ -68,8 +68,8 @@ class CfgAmmo
         warheadName = "GRAPPLING HOOK";
         whistleDist = 0;
 
-        soundFly[] = {"AOW_AdvancedGrappling\sounds\launch.ogg", 1, 1};
-        soundHit1[] = {"AOW_AdvancedGrappling\sounds\impact.ogg", 3.16228, 1, 1400};
+        soundFly[] = {"AOW_AdvancedGrappling\Data\sounds\launch.ogg", 3, 1, 100};
+        soundHit1[] = {"AOW_AdvancedGrappling\Data\sounds\impact.ogg", 3, 1, 100};
         multiSoundHit[] = {"soundHit1", 1};
         muzzleEffect = "";
        

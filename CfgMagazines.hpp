@@ -8,7 +8,7 @@ class CfgMagazines
 		type = 16;
 		displayName = "40mm Grappling Hook Round";
 		displayNameShort = "Grappling Hook";
-		picture = "\A3\Weapons_f\Data\ui\gear_UGL_slug_CA.paa";
+		picture = "AOW_AdvancedGrappling\Data\UI\grappling_hook_slug_ca.paa"
 		ammo = "G_40mm_Grappling_Hook";
 		initSpeed = 80;
 		count = 1;
@@ -27,8 +27,11 @@ class CfgMagazines
 		scope = 2;
 		displayName = "Throwable Grappling Hook";
 		displayNameShort = "Grappling Hook";
-		model = "\A3\weapons_f\ammo\flare_white";
-		picture = "\A3\Weapons_F\Data\UI\gear_flare_white_ca.paa";
+		picture = "AOW_AdvancedGrappling\Data\UI\grappling_hook_ca.paa"
 		ammo = "G_Grappling_Hook";
+		descriptionShort = "Throwable grappling hook with 100m rope";
+		mass = 8;
+		model = "\A3\weapons_f\ammo\flare_white";
+		deleteIfEmpty = 0;
 	};
 };
