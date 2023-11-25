@@ -1,0 +1,26 @@
+name = "Advanced Grappling"
+author = "supercas240"
+prefix = "advanced_grappling"
+mainprefix = "x"
+
+[files]
+include = [
+    "mod.cpp",      
+    "meta.cpp",
+    "LICENSE",
+    "logo_ca.paa",
+]
+exclude = [
+    "*.psd",        
+    "*.md",
+    "*.png"
+]
+
+[properties]
+author = "supercas240"
+url = "https://github.com/casvanluijtelaar/Advanced-Grappling"
+
+[version]
+major = 1
+minor = 0
+patch = 0

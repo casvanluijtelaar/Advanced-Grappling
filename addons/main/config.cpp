@@ -1,10 +1,9 @@
 class CfgPatches
 {
-	class AOW_AdvancedGrappling
+	class ADDON 
 	{
 		author = "supercas240";
-		name = "Advanced Grappling";
-		url = "https://github.com/casvanluijtelaar";
+		name = "ADDON";
 		units[] = {"AOW_AdvancedGrappling"};
 		requiredVersion = 1.0;
 		requiredAddons[] = {"AUR_AdvancedUrbanRappelling", "A3_weapons_F"};
@@ -14,20 +13,14 @@ class CfgPatches
 
 class CfgFunctions
 {
-	class SA
+	class advanced_grappling
 	{
-		class AdvancedGrappling
+		class advancedGrappling
 		{
-			file = "\AOW_AdvancedGrappling\functions";
-			class advancedGrappling
-			{
-				postInit = 1;
-			};
-			class advancedUrbanRappellingOverrides
-			{
-				postInit = 1;
-			};
+			preStart = 1;
 		};
+
+        class advancedUrbanRappellingOverrides;
 	};
 };
 
