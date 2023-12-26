@@ -4,27 +4,16 @@ class CfgPatches
 	{
 		author = "supercas240";
 		name = "ADDON";
-		units[] = {"AOW_AdvancedGrappling"};
-		requiredVersion = 1.0;
+		units[] = {};
+		weapons[] = {"Throw"};
 		requiredAddons[] = {"AUR_AdvancedUrbanRappelling", "A3_weapons_F"};
-		weapons[] = {"Grenade_Grappel_Throw"};
+		requiredVersion = 1.0;
 	};
 };
 
-class CfgFunctions
-{
-	class advanced_grappling
-	{
-		class advancedGrappling
-		{
-			preStart = 1;
-		};
-
-        class advancedUrbanRappellingOverrides;
-	};
-};
 
 #include "CfgAmmo.hpp"
+#include "CfgFunctions.hpp"
 #include "CfgMagazines.hpp"
 #include "CfgMagazineWells.hpp"
 #include "CfgWeapons.hpp"
