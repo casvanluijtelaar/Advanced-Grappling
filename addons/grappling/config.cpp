@@ -8,7 +8,6 @@ class CfgPatches {
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {
             "ag_main",
-            "ace_main",
             "AUR_AdvancedUrbanRappelling",
             "A3_weapons_F"
         };

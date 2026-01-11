@@ -6,13 +6,22 @@
  * Called by postInit for the initial player and by the "Respawn" EH for new player objects.
  */
 
- systemChat "fired";
+params ["_unit"];
 
-// only handle events for ammo fired from this package
-if (_ammo != "G_40mm_Grappling_Hook" && _ammo != "G_Grappling_Hook") exitWith {false;};
+_unit addEventHandler ["Fired", {
+    params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
 
-// ignore when not fired on foot
-if (vehicle _unit != _unit) exitWith {false;};
+    // only handle events for ammo fired from this package
+    if (_ammo != "G_40mm_Grappling_Hook" && _ammo != "G_Grappling_Hook") exitWith {};
 
-// track the projectile updates on a separate thread
-[_unit, _projectile] spawn FUNC(spawnRope);
+    // ignore when not fired on foot
+    if (vehicle _unit != _unit) exitWith {};
+
+    // track the projectile updates on a separate thread
+    [_unit, _projectile] spawn FUNC(spawnRope);
+}];
+
+_unit addEventHandler ["Respawn", {
+    params ["_unit", "_corpse"];
+    [_unit] call FUNC(addEventHandlers);
+}];
