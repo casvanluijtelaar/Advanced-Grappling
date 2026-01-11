@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 
 
 ######## GLOBALS #########
-PROJECT_NAME = "NEW_MOD_ABBR_CAPS"
+PROJECT_NAME = "AG"
 ##########################
 
 

@@ -9,7 +9,7 @@
             "type": "sqf",
             "request": "launch",
             "missionRoot": "${workspaceFolder}",
-            "scriptPrefix": "z\\NEW_MOD_ABBR"
+            "scriptPrefix": "z\\ag"
         }
     ]
 }

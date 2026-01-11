@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project name="NEW_MOD_ABBR_CAPS">
+<Project name="AG">
     <Package name="Main">
-        <Key ID="STR_NEW_MOD_ABBR_CAPS_Main_Attributes">
-            <English>ArmaForces Attributes</English>
-            <Polish>Atrybuty ArmaForces</Polish>
+        <Key ID="STR_AG_Main_Attributes">
+            <English>Advanced Grappling Attributes</English>
         </Key>
-        <Key ID="STR_NEW_MOD_ABBR_CAPS_Main_Category">
-            <English>ArmaForces</English>
+        <Key ID="STR_AG_Main_Category">
+            <English>Advanced Grappling</English>
         </Key>
-        <Key ID="STR_NEW_MOD_ABBR_CAPS_Main_Toolbar">
-            <English>ArmaForces</English>
+        <Key ID="STR_AG_Main_Toolbar">
+            <English>Advanced Grappling</English>
         </Key>
-        <Key ID="STR_NEW_MOD_ABBR_CAPS_Main_ToolbarWiki">
-            <English>Wiki</English>
+        <Key ID="STR_AG_Main_ToolbarWiki">
+            <English>Github</English>
         </Key>
     </Package>
 </Project>

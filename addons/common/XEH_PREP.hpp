@@ -1,2 +1,0 @@
-PREP(isEmptyString);
-PREP(systemChat);
