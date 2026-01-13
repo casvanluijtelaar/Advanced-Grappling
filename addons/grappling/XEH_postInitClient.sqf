@@ -1,2 +1,3 @@
 #include "script_component.hpp"
-[player] call FUNC(addEventHandlers);
+
+["TAG_AgFiredEvent", "fired", FUNC(onBisFired)] call CBA_fnc_addBISPlayerEventHandler;

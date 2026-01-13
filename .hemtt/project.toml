@@ -24,11 +24,18 @@ workshop = [
     "450814997", # CBA_A3
     "730310357", # Advanced urban rapelling
 ]
+parameters = [
+    "-window",
+]
+mission = "zeus_test_arena.Tanoa"
 
 [hemtt.launch.ace]
 workshop = [
     "450814997", # CBA_A3
     "730310357", # Advanced urban rapelling
     "463939057", # ACE
+]
+parameters = [
+    "-window",
 ]
 mission = "zeus_test_arena.Tanoa"

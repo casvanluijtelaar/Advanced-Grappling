@@ -1,4 +1,4 @@
-PREP(addEventHandlers);
+PREP(onBisFired);
 PREP(findRappelPoint);
 PREP(rappel);
 PREP(spawnRope);
