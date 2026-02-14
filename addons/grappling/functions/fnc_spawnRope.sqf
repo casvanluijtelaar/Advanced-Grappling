@@ -45,8 +45,47 @@ if(count _grappelData == 0) exitWith {false;};
 _grappelPoint = _grappelData select 0;
 _grappelDirection = _grappelData select 1;
 
-// calculate the length the rope should be
-_ropeLength = (getPosASL _player) distance _grappelPoint;
-[_player, _grappelPoint, _grappelDirection, _ropeLength] call FUNC(rappel);
+// Calculate distance and positions
+_playerPos = getPosASL _player;
+_ropeLength = _grappelPoint distance _playerPos;
 
-nil
+// Create anchor at player (matching existing patterns)
+_anchor = createVehicle ["B_static_AA_F", _player, [], 0, "CAN_COLLIDE"];
+_anchor allowDamage false;
+hideObject _anchor;
+hideObjectGlobal _anchor;
+[[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
+
+// Create a temporary target at the player to pull the rope to them
+_tempTarget = createVehicle ["Land_Can_V2_F", _player, [], 0, "CAN_COLLIDE"];
+_tempTarget allowDamage false;
+hideObject _tempTarget;
+hideObjectGlobal _tempTarget;
+[[_tempTarget],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
+
+// Create the rope between anchor and temp target
+// This ensures the rope is "stretched" to the player at creation
+myRope = ropeCreate [_anchor, [0, 0, 0], _tempTarget, [0, 0, 0], _ropeLength];
+myRope allowDamage false;
+
+// Now move the anchor to the grapple point
+_anchor setPosWorld _grappelPoint;
+
+// Delete the temp target to leave the rope free-ended at the player's position
+deleteVehicle _tempTarget;
+
+// Calculate distance to player
+_ropeLength = _grappelPoint distance (getPosASL _player);
+
+// Create anchor at grapple point
+_anchor = createVehicle ["B_static_AA_F", [0,0,0], [], 0, "CAN_COLLIDE"];
+_anchor setPosWorld _grappelPoint;
+_anchor allowDamage false;
+_anchor enableSimulation false;
+hideObjectGlobal _anchor;
+
+// Create the rope
+// The rope starts at the anchor and its length reaches the player
+_finalRope = ropeCreate [_anchor, [0, 0, 0], _ropeLength];
+_finalRope allowDamage false;
+
