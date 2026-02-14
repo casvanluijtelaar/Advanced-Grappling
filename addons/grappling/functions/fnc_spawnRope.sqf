@@ -11,6 +11,7 @@ _hook = createVehicle ["B_static_AA_F", _player, [], 0, "CAN_COLLIDE"];
 hideObject _hook;
 hideObjectGlobal _hook;
 _hook allowDamage false;
+[[_hook],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
 // attach a rope to the hook
 _rope = ropeCreate [_hook, [0,0,0], 100];

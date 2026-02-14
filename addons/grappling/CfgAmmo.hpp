@@ -53,6 +53,7 @@ class CfgAmmo
     class G_40mm_Grappling_Hook : GrenadeCore
     {
         aiAmmoUsageFlags = "0"; // no AI usage
+        airFriction = -0.01;
         cost = 40;
         dangerRadiusHit = 0;
         deflecting = 0;
@@ -60,7 +61,7 @@ class CfgAmmo
         explosive = 0;
         hit = 0;
         indirectHit = 0;
-        maxSpeed = 100;
+        maxSpeed = 50;
         model = "\A3\weapons_f\ammo\UGL_slug";
         simulation = "shotShell";
         suppressionRadiusHit = 0;
