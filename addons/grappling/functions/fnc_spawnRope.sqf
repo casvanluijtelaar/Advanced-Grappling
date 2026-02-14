@@ -39,21 +39,13 @@ _highestSegmentPos = [0, 0, 0];
 ropeDestroy _rope;
 deleteVehicle _hook;
 
-// if player is already rappelling they should not be able to start another one
-if(_player getVariable ["AUR_Is_Rappelling",false])  exitWith {false};
-
 // find a rappelpoint near heighest point of the rope
 _grappelData = [_highestSegmentPos, "POSITION"] call FUNC(findRappelPoint);
 if(count _grappelData == 0) exitWith {false;};
 _grappelPoint = _grappelData select 0;
 _grappelDirection = _grappelData select 1;
 
-// if the grappel point is more than 20 meters away in the horizontal direction
-// cancel the grappeling
-if((_player distance2D _grappelPoint) > 20) exitWith {false;};
-
-
-// start the advanced urbanced urban rappelling
+// calculate the length the rope should be
 _ropeLength = (getPosASL _player) distance _grappelPoint;
 [_player, _grappelPoint, _grappelDirection, _ropeLength] call FUNC(rappel);
 
