@@ -65,27 +65,11 @@ hideObjectGlobal _tempTarget;
 
 // Create the rope between anchor and temp target
 // This ensures the rope is "stretched" to the player at creation
-myRope = ropeCreate [_anchor, [0, 0, 0], _tempTarget, [0, 0, 0], _ropeLength];
-myRope allowDamage false;
+_permRope = ropeCreate [_anchor, [0, 0, 0], _tempTarget, [0, 0, 0], _ropeLength];
+_permRope allowDamage false;
 
 // Now move the anchor to the grapple point
 _anchor setPosWorld _grappelPoint;
 
 // Delete the temp target to leave the rope free-ended at the player's position
 deleteVehicle _tempTarget;
-
-// Calculate distance to player
-_ropeLength = _grappelPoint distance (getPosASL _player);
-
-// Create anchor at grapple point
-_anchor = createVehicle ["B_static_AA_F", [0,0,0], [], 0, "CAN_COLLIDE"];
-_anchor setPosWorld _grappelPoint;
-_anchor allowDamage false;
-_anchor enableSimulation false;
-hideObjectGlobal _anchor;
-
-// Create the rope
-// The rope starts at the anchor and its length reaches the player
-_finalRope = ropeCreate [_anchor, [0, 0, 0], _ropeLength];
-_finalRope allowDamage false;
-
