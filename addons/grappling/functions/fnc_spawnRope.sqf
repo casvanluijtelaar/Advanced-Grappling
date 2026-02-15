@@ -71,5 +71,8 @@ _permRope allowDamage false;
 // Now move the anchor to the grapple point
 _anchor setPosWorld _grappelPoint;
 
+// Tag the anchor so we can identify it later for removal
+_anchor setVariable ["AG_is_Grappling_Anchor", true, true];
+
 // Delete the temp target to leave the rope free-ended at the player's position
 deleteVehicle _tempTarget;
