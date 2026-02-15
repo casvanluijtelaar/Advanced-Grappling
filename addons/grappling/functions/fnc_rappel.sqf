@@ -36,9 +36,12 @@ _rappelDevice allowDamage false;
 
 [[_player,_rappelDevice,_anchor],"AUR_Play_Rappelling_Sounds_Global"] call AUR_RemoteExecServer;
 
-_rope1 = ropeCreate [_rappelDevice, [0,0.15,0], _anchor, [0, 0, 0], _ropeLength - 2];
+_topLength = _rappelPoint distance _startPos;
+_bottomLength = (_ropeLength - _topLength) max 0;
+
+_rope1 = ropeCreate [_rappelDevice, [0,0.15,0], _anchor, [0, 0, 0], _topLength];
 _rope1 allowDamage false;
-_rope2 = ropeCreate [_rappelDevice, [-0.15,0,0], 2];
+_rope2 = ropeCreate [_rappelDevice, [-0.15,0,0], _bottomLength];
 _rope2 allowDamage false;
 
 _anchor setPosWorld _rappelPoint;
