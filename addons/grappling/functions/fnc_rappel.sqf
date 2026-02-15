@@ -10,11 +10,12 @@
 	_this select 1: Array - the rappel point coordinares
 	_this select 2: Array - the rappel point orientation
 	_this select 3: Array - the total rappel rope length
+	_this select 4: Array - the start position on the rope
 */
-params ["_player","_rappelPoint","_rappelDirection","_ropeLength"];
+params ["_player","_rappelPoint","_rappelDirection","_ropeLength","_startPos"];
 
 _player setVariable ["AUR_Is_Rappelling",true,true];
-_playerStartPosition = (getPosASL _player) vectorAdd [0,0,2];
+_playerStartPosition = _startPos;
 _playerPreRappelPosition = _rappelPoint;
 
 _player setPosWorld _playerStartPosition;
@@ -53,7 +54,7 @@ _player setVectorDir (_rappelDirection vectorMultiply -1);
 
 _gravityAccelerationVec = [0,0,-9.8];
 _velocityVec = [0,0,0];
-_lastTime = diag_tialkTime;
+_lastTime = diag_tickTime;
 _lastPosition = _playerStartPosition;
 
 _decendRopeKeyDownHandler = -1;
