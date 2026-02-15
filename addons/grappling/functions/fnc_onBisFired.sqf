@@ -1,10 +1,4 @@
 #include "..\script_component.hpp"
-/*
- * fn_addEventHandlers.sqf
- *
- * Adds grappling event handlers to a unit.
- * Called by postInit for the initial player and by the "Respawn" EH for new player objects.
- */
 
 params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile"];
 

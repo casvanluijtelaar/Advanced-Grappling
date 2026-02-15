@@ -3,28 +3,23 @@
 /*
  * fnc_removeNearbyRope.sqf
  *
- * Finds the nearest grappling anchor and removes it along with any attached ropes.
+ * Finds the nearest grappling anchor the player is facing and removes it.
  */
 
 params ["_player"];
 
-// Find nearby anchors within 5 meters
-private _nearbyAnchors = nearestObjects [_player, ["B_static_AA_F"], 5] select { _x getVariable ["AG_is_Grappling_Anchor", false] };
+private _anchor = [_player] call FUNC(getFacingRope);
 
-if (count _nearbyAnchors > 0) then {
-    private _nearestAnchor = _nearbyAnchors select 0;
-    
+if (!isNull _anchor) then {
     // Destroy ropes attached to this anchor
-    private _ropes = ropes _nearestAnchor;
+    private _ropes = ropes _anchor;
     {
         ropeDestroy _x;
     } forEach _ropes;
     
     // Delete the anchor object
-    deleteVehicle _nearestAnchor;
-    
-    // Optional: Feedback
-    // systemChat "Grappling rope removed.";
+    deleteVehicle _anchor;
 } else {
-    // systemChat "No grappling rope nearby to remove.";
+    // Fallback just in case, though the action condition should prevent this
+    // systemChat "No grappling rope in front of you.";
 };

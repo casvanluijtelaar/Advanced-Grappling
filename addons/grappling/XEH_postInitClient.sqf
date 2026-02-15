@@ -12,5 +12,5 @@ player addAction [
     false,
     true,
     "",
-    "(nearestObjects [player, ['B_static_AA_F'], 5] findIf { _x getVariable ['AG_is_Grappling_Anchor', false] }) != -1"
+    format ["!isNull ([_this] call %1)", QFUNC(getFacingRope)]
 ];
