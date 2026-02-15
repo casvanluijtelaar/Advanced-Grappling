@@ -17,7 +17,7 @@ if (count _ropeData > 0) then {
     private _rappelDirection = _anchor getVariable ["AG_Grapple_Direction", [0,1,0]];
     private _ropeLength = _anchor getVariable ["AG_Grapple_Length", 100];
     
-    [_player, _rappelPoint, _rappelDirection, _ropeLength, _closestPos] call FUNC(rappel);
+    [_player, _rappelPoint, _rappelDirection, _ropeLength, _closestPos, _anchor] call FUNC(rappel);
 } else {
     systemChat "No rope nearby to rappel.";
 };

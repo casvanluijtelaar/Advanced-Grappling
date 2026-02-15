@@ -7,7 +7,7 @@
 params ["_player","_projectile"];
 
 // create hidden vehicle that we can attach a rope to.
-_hook = createVehicle ["B_static_AA_F", _player, [], 0, "CAN_COLLIDE"];
+_hook = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 hideObject _hook;
 hideObjectGlobal _hook;
 _hook allowDamage false;
@@ -50,7 +50,7 @@ _playerPos = getPosASL _player;
 _ropeLength = _grappelPoint distance _playerPos;
 
 // Create anchor at player (matching existing patterns)
-_anchor = createVehicle ["B_static_AA_F", _player, [], 0, "CAN_COLLIDE"];
+_anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 _anchor allowDamage false;
 hideObject _anchor;
 hideObjectGlobal _anchor;

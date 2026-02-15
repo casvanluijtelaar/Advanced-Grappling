@@ -2,6 +2,21 @@
 
 ["TAG_AgFiredEvent", "fired", FUNC(onBisFired)] call CBA_fnc_addBISPlayerEventHandler;
 
+
+player addAction [
+    "Climb Rope",
+    {
+        [player] call FUNC(rappelAction);
+    },
+    nil,
+    1.5,
+    false,
+    true,
+    "",
+    format ["[_this] call %1", QFUNC(canRappel)]
+];
+
+
 player addAction [
     "Remove Rope",
     {
@@ -12,18 +27,5 @@ player addAction [
     false,
     true,
     "",
-    format ["count ([_this] call %1) > 0", QFUNC(getClosestRope)]
-];
-
-player addAction [
-    "Rappel",
-    {
-        [player] call FUNC(rappelAction);
-    },
-    nil,
-    1.5,
-    false,
-    true,
-    "",
-    format ["count ([_this] call %1) > 0", QFUNC(getClosestRope)]
+    format ["[_this] call %1", QFUNC(canRappel)]
 ];

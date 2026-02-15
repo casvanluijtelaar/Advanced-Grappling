@@ -11,7 +11,10 @@
 params ["_unit"];
 
 private _unitPos = getPosASL _unit;
-private _nearbyAnchors = nearestObjects [_unit, ["B_static_AA_F"], 20, true] select { _x getVariable ["AG_is_Grappling_Anchor", false] };
+private _nearbyAnchors = nearestObjects [_unit, ["B_UAV_01_F"], 20, true] select {
+    (_x getVariable ["AG_is_Grappling_Anchor", false]) &&
+    !(_x getVariable ["AG_is_Being_Used", false])
+};
 if (count _nearbyAnchors == 0) exitWith { [] };
 
 private _closestAnchor = objNull;

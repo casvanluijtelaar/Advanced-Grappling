@@ -11,8 +11,12 @@
 	_this select 2: Array - the rappel point orientation
 	_this select 3: Array - the total rappel rope length
 	_this select 4: Array - the start position on the rope
+	_this select 5: Object - the original rope anchor
 */
-params ["_player","_rappelPoint","_rappelDirection","_ropeLength","_startPos"];
+params ["_player","_rappelPoint","_rappelDirection","_ropeLength","_startPos","_originalAnchor"];
+
+_originalAnchor setVariable ["AG_is_Being_Used", true, true];
+[_originalAnchor, false] call FUNC(setRopeVisibility);
 
 _player setVariable ["AUR_Is_Rappelling",true,true];
 _playerStartPosition = _startPos;
@@ -28,7 +32,7 @@ _anchor allowDamage false;
 [[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
 // Create rappel device (attached to player)
-_rappelDevice = createVehicle ["B_static_AA_F", _player, [], 0, "CAN_COLLIDE"];
+_rappelDevice = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 hideObject _rappelDevice;
 _rappelDevice setPosWorld _playerStartPosition;
 _rappelDevice allowDamage false;
@@ -260,6 +264,9 @@ ropeDestroy _rope1;
 ropeDestroy _rope2;
 deleteVehicle _anchor;
 deleteVehicle _rappelDevice;
+
+_originalAnchor setVariable ["AG_is_Being_Used", false, true];
+[_originalAnchor, true] call FUNC(setRopeVisibility);
 
 _player setVariable ["AUR_Is_Rappelling",nil,true];
 _player setVariable ["AUR_Rappel_Rope_Top",nil];
