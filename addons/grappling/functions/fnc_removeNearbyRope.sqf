@@ -8,9 +8,11 @@
 
 params ["_player"];
 
-private _anchor = [_player] call FUNC(getFacingRope);
+private _ropeData = [_player] call FUNC(getClosestRope);
 
-if (!isNull _anchor) then {
+if (count _ropeData > 0) then {
+    _ropeData params ["_anchor", "_closestPos"];
+    
     // Destroy ropes attached to this anchor
     private _ropes = ropes _anchor;
     {
@@ -19,7 +21,4 @@ if (!isNull _anchor) then {
     
     // Delete the anchor object
     deleteVehicle _anchor;
-} else {
-    // Fallback just in case, though the action condition should prevent this
-    // systemChat "No grappling rope in front of you.";
 };

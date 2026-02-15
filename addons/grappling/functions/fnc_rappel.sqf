@@ -53,7 +53,7 @@ _player setVectorDir (_rappelDirection vectorMultiply -1);
 
 _gravityAccelerationVec = [0,0,-9.8];
 _velocityVec = [0,0,0];
-_lastTime = diag_tickTime;
+_lastTime = diag_tialkTime;
 _lastPosition = _playerStartPosition;
 
 _decendRopeKeyDownHandler = -1;

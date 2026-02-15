@@ -12,5 +12,18 @@ player addAction [
     false,
     true,
     "",
-    format ["!isNull ([_this] call %1)", QFUNC(getFacingRope)]
+    format ["count ([_this] call %1) > 0", QFUNC(getClosestRope)]
+];
+
+player addAction [
+    "Rappel",
+    {
+        [player] call FUNC(rappelAction);
+    },
+    nil,
+    1.5,
+    false,
+    true,
+    "",
+    format ["count ([_this] call %1) > 0", QFUNC(getClosestRope)]
 ];

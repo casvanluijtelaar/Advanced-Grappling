@@ -1,20 +1,21 @@
 #include "script_component.hpp"
 
 /*
- * fnc_getFacingRope.sqf
+ * fnc_getClosestRope.sqf
  *
- * Returns the nearest grappling anchor where at least one rope segment is within 2m of the unit.
- * Scans all anchors within 20m (2D) to find the actual closest one.
- * Returns objNull if no such rope exists.
+ * Returns the nearest grappling anchor and the position of the closest segment.
+ * Scans all anchors within 20m (2D) to find the actual closest one within 2m.
+ * Returns [] if no such rope exists.
  */
 
 params ["_unit"];
 
 private _unitPos = getPosASL _unit;
 private _nearbyAnchors = nearestObjects [_unit, ["B_static_AA_F"], 20, true] select { _x getVariable ["AG_is_Grappling_Anchor", false] };
-if (count _nearbyAnchors == 0) exitWith { objNull };
+if (count _nearbyAnchors == 0) exitWith { [] };
 
 private _closestAnchor = objNull;
+private _closestPos = [0,0,0];
 private _minDistance = 2; // Maximum distance to consider
 
 {
@@ -22,13 +23,17 @@ private _minDistance = 2; // Maximum distance to consider
     {
         private _rope = _x;
         {
-            private _dist = (getPosASL _x) distance _unitPos;
+            private _segmentPos = getPosASL _x;
+            private _dist = _segmentPos distance _unitPos;
             if (_dist < _minDistance) then {
                 _minDistance = _dist;
                 _closestAnchor = _anchor;
+                _closestPos = _segmentPos;
             };
         } forEach (ropeSegments _rope);
     } forEach (ropes _anchor);
 } forEach _nearbyAnchors;
 
-_closestAnchor
+if (isNull _closestAnchor) exitWith { [] };
+
+[_closestAnchor, _closestPos]
