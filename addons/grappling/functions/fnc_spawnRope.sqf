@@ -55,6 +55,7 @@ _anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 _anchor allowDamage false;
 hideObject _anchor;
 hideObjectGlobal _anchor;
+ _anchor enableSimulation false;
 [[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
 // Create a temporary target at the player to pull the rope to them
@@ -75,8 +76,8 @@ _anchor setPosWorld _grappelPoint;
 // If we didn't find a grapple point, let it fall
 if (!_isAttached) then {
     _anchor enableSimulation true;
-} else {
-    _anchor enableSimulation false;
+    _anchor setFuel 0;
+    _anchor setDamage 0.95;
 };
 
 // store information in the anchor so we can reuse it later
