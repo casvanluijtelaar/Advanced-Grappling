@@ -18,7 +18,7 @@ _rope = ropeCreate [_hook, [0,0,0], 100];
 _rope allowDamage false;
 
 // update the hook position to match the projectile position
-_finalProjectilePos = objNull;
+_finalProjectilePos = getPosASL _player;
 
 waitUntil {
 	if (isNull _projectile) exitWith {true};
@@ -27,23 +27,13 @@ waitUntil {
 	false;
 };
 
-// find the highest rope segment position
-_highestSegmentPos = [0, 0, 0];
-{
-	_segmentPos = getPosASL _x;
-	if ((_segmentPos select 2) > (_highestSegmentPos select 2)) then {
-		_highestSegmentPos = _segmentPos;
-	};
-
-} forEach ropeSegments _rope;
-
 // initial rope was only for visuals, we need to destroy it when replaced
 // with the advanced_urban_rappelling rope
 ropeDestroy _rope;
 deleteVehicle _hook;
 
 // find a rappelpoint near heighest point of the rope
-_grappelData = [_highestSegmentPos, "POSITION"] call FUNC(findRappelPoint);
+_grappelData = [_finalProjectilePos, "POSITION"] call FUNC(findRappelPoint);
 
 private _isAttached = true;
 private _grappelPoint = [0,0,0];
@@ -58,8 +48,7 @@ if (count _grappelData == 0) then {
 };
 
 // Rope length is just shortest path between _grappelPoint and player, with some extra buffer
-_playerPos = getPosASL _player;
-_ropeLength = (_grappelPoint distance _playerPos) + 5;
+_ropeLength = (_grappelPoint distance getPosASL _player) + 5;
 
 // Create anchor at player (matching existing patterns)
 _anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
