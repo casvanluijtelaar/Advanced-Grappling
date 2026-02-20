@@ -18,9 +18,12 @@ _rope = ropeCreate [_hook, [0,0,0], 100];
 _rope allowDamage false;
 
 // update the hook position to match the projectile position
+_finalProjectilePos = objNull;
+
 waitUntil {
 	if (isNull _projectile) exitWith {true};
-	_hook setPosWorld getPosASL _projectile;
+	_finalProjectilePos = getPosASL _projectile;
+    _hook setPosWorld _finalProjectilePos;
 	false;
 };
 
@@ -42,9 +45,17 @@ deleteVehicle _hook;
 // find a rappelpoint near heighest point of the rope
 _grappelData = [_highestSegmentPos, "POSITION"] call FUNC(findRappelPoint);
 
-if(count _grappelData == 0) exitWith {false;};
-_grappelPoint = _grappelData select 0;
-_grappelDirection = _grappelData select 1;
+private _isAttached = true;
+private _grappelPoint = [0,0,0];
+private _grappelDirection = [0,0,0];
+
+if (count _grappelData == 0) then {
+    _isAttached = false;
+    _grappelPoint = _finalProjectilePos;
+} else {
+    _grappelPoint = _grappelData select 0;
+    _grappelDirection = _grappelData select 1;
+};
 
 // Rope length is just shortest path between _grappelPoint and player, with some extra buffer
 _playerPos = getPosASL _player;
@@ -72,8 +83,16 @@ _permRope allowDamage false;
 // Now move the anchor to the grapple point
 _anchor setPosWorld _grappelPoint;
 
-// Tag the anchor so we can identify it later for removal
+// If we didn't find a grapple point, let it fall
+if (!_isAttached) then {
+    _anchor enableSimulation true;
+} else {
+    _anchor enableSimulation false;
+};
+
+// store information in the anchor so we can reuse it later
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];
+_anchor setVariable ["AG_is_Attached", _isAttached, true];
 _anchor setVariable ["AG_Grapple_Direction", _grappelDirection, true];
 _anchor setVariable ["AG_Grapple_Length", _ropeLength, true];
 _anchor setVariable ["AG_Grapple_Magazine", _magazine, true];
