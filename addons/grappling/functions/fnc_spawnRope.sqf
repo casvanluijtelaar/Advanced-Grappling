@@ -4,7 +4,7 @@
  * place a rope from the player position to the provided _projectile
  */
 
-params ["_player","_projectile"];
+params ["_player","_projectile", "_magazine"];
 
 // create hidden vehicle that we can attach a rope to.
 _hook = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
@@ -41,13 +41,14 @@ deleteVehicle _hook;
 
 // find a rappelpoint near heighest point of the rope
 _grappelData = [_highestSegmentPos, "POSITION"] call FUNC(findRappelPoint);
+
 if(count _grappelData == 0) exitWith {false;};
 _grappelPoint = _grappelData select 0;
 _grappelDirection = _grappelData select 1;
 
-// Calculate distance and positions
+// Rope length is just shortest path between _grappelPoint and player, with some extra buffer
 _playerPos = getPosASL _player;
-_ropeLength = _grappelPoint distance _playerPos;
+_ropeLength = (_grappelPoint distance _playerPos) + 5;
 
 // Create anchor at player (matching existing patterns)
 _anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
@@ -75,6 +76,7 @@ _anchor setPosWorld _grappelPoint;
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];
 _anchor setVariable ["AG_Grapple_Direction", _grappelDirection, true];
 _anchor setVariable ["AG_Grapple_Length", _ropeLength, true];
+_anchor setVariable ["AG_Grapple_Magazine", _magazine, true];
 
 // Delete the temp target to leave the rope free-ended at the player's position
 deleteVehicle _tempTarget;

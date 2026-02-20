@@ -1,10 +1,10 @@
 #include "script_component.hpp"
 
-["TAG_AgFiredEvent", "fired", FUNC(onBisFired)] call CBA_fnc_addBISPlayerEventHandler;
+["AG_FiredEvent", "fired", FUNC(onBisFired)] call CBA_fnc_addBISPlayerEventHandler;
 
 
 player addAction [
-    "Climb Rope",
+    "Climb rope",
     {
         [player] call FUNC(rappelAction);
     },
@@ -18,7 +18,7 @@ player addAction [
 
 
 player addAction [
-    "Remove Rope",
+    "Pick up rope",
     {
         [player] call FUNC(removeNearbyRope);
     },
