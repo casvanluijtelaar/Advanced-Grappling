@@ -11,5 +11,6 @@ symbols/*
 
 # Bikey
 *.biprivatekey
+*.hemttprivatekey
 
 extension/target/

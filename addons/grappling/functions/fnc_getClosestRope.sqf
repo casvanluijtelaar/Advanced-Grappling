@@ -15,7 +15,7 @@ private _nearbyAnchors = nearestObjects [_unit, ["B_UAV_01_F"], 20, true] select
     (_x getVariable ["AG_is_Grappling_Anchor", false]) &&
     !(_x getVariable ["AG_is_Being_Used", false])
 };
-if (count _nearbyAnchors == 0) exitWith { [] };
+if (_nearbyAnchors isEqualTo []) exitWith { [] };
 
 private _closestAnchor = objNull;
 private _closestPos = [0,0,0];

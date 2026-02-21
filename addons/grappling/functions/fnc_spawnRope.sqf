@@ -79,6 +79,7 @@ if (!_isAttached) then {
     _anchor engineOn false;
     _anchor setDamage 0.95;
     _anchor setFuel 0;
+};
 
 // store information in the anchor so we can reuse it later
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];

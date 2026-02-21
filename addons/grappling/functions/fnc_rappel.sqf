@@ -220,11 +220,11 @@ while {true} do {
 
 	_lastPosition = _newPosition;
 
-if(!alive _player || vehicle _player != _player || _player getVariable ["AUR_Climb_To_Top",false] || _player getVariable ["AUR_Detach_Rope",false] ) exitWith {};
+if(!alive _player || !isNull objectParent _player || _player getVariable ["AUR_Climb_To_Top",false] || _player getVariable ["AUR_Detach_Rope",false] ) exitWith {};
 	sleep 0.01;
 };
 
-if(ropeLength _rope2 > 1 && alive _player && vehicle _player == _player && not (_player getVariable ["AUR_Climb_To_Top",false])) then {
+if(ropeLength _rope2 > 1 && alive _player && isNull objectParent _player && not (_player getVariable ["AUR_Climb_To_Top",false])) then {
 
 	_playerStartASLIntersect = getPosASL _player;
 	_playerEndASLIntersect = [_playerStartASLIntersect select 0, _playerStartASLIntersect select 1, (_playerStartASLIntersect select 2) - 5];
