@@ -1,10 +1,10 @@
 #include "script_component.hpp"
 
 /*
- * fnc_canRappel.sqf
+ * fnc_canPickup.sqf
  *
- * Condition check for grappling actions (Remove/Rappel).
- * Checks if the unit is not already rappelling and if there's a rope nearby.
+ * Condition check for the "Pick up rope" action.
+ * True whenever a rope is nearby and the unit is not rappelling.
  */
 
 params ["_unit"];

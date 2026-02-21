@@ -13,7 +13,7 @@ player addAction [
     false,
     true,
     "",
-    format ["[_this] call %1", QFUNC(canRappel)]
+    format ["[_this] call %1", QFUNC(canClimb)]
 ];
 
 
@@ -27,5 +27,5 @@ player addAction [
     false,
     true,
     "",
-    format ["[_this] call %1", QFUNC(canRappel)]
+    format ["[_this] call %1", QFUNC(canPickup)]
 ];

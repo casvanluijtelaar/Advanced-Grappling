@@ -5,5 +5,6 @@ PREP(spawnRope);
 PREP(removeNearbyRope);
 PREP(getClosestRope);
 PREP(rappelAction);
-PREP(canRappel);
+PREP(canClimb);
+PREP(canPickup);
 PREP(setRopeVisibility);
