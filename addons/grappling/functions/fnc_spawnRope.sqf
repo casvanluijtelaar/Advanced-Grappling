@@ -34,7 +34,6 @@ deleteVehicle _hook;
 
 // find a rappelpoint near heighest point of the rope
 _grappelData = [_finalProjectilePos, "POSITION"] call FUNC(findRappelPoint);
-systemChat format ["_grappelData: %1", _grappelData];
 
 private _isAttached = true;
 private _grappelPoint = [0,0,0];
@@ -72,6 +71,14 @@ _permRope allowDamage false;
 
 // Now move the anchor to the grapple point
 _anchor setPosWorld _grappelPoint;
+
+// If attached: freeze anchor in place (simulation must be enabled during ropeCreate for segments to render)
+// If not attached: let anchor fall with physics
+if (!_isAttached) then {
+    hint "Hook did not attach properly";
+    _anchor setFuel 0;
+    _anchor setDamage 0.95;
+};
 
 // store information in the anchor so we can reuse it later
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];

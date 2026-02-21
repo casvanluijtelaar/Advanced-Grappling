@@ -16,7 +16,6 @@ if (count _ropeData > 0) then {
     // Return magazine to player
     private _magazine = _anchor getVariable ["AG_Grapple_Magazine", ""];
     if (_magazine != "") then {
-        systemChat format ["returning magazine %1", _magazine];
         _player addMagazine _magazine;
     };
 
