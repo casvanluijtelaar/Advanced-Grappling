@@ -75,10 +75,10 @@ _anchor setPosWorld _grappelPoint;
 // If attached: freeze anchor in place (simulation must be enabled during ropeCreate for segments to render)
 // If not attached: let anchor fall with physics
 if (!_isAttached) then {
-    hint "Hook did not attach properly";
-    _anchor setFuel 0;
+    hintSilent "Hook did not attach properly";
+    _anchor engineOn false;
     _anchor setDamage 0.95;
-};
+    _anchor setFuel 0;
 
 // store information in the anchor so we can reuse it later
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];
