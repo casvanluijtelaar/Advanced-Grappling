@@ -34,6 +34,7 @@ deleteVehicle _hook;
 
 // find a rappelpoint near heighest point of the rope
 _grappelData = [_finalProjectilePos, "POSITION"] call FUNC(findRappelPoint);
+systemChat format ["_grappelData: %1", _grappelData];
 
 private _isAttached = true;
 private _grappelPoint = [0,0,0];
@@ -50,12 +51,11 @@ if (count _grappelData == 0) then {
 // Rope length is just shortest path between _grappelPoint and player, with some extra buffer
 _ropeLength = (_grappelPoint distance getPosASL _player) + 5;
 
-// Create anchor at player (matching existing patterns)
+// create a new anchor at the player.
 _anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 _anchor allowDamage false;
 hideObject _anchor;
 hideObjectGlobal _anchor;
- _anchor enableSimulation false;
 [[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
 // Create a temporary target at the player to pull the rope to them
@@ -72,13 +72,6 @@ _permRope allowDamage false;
 
 // Now move the anchor to the grapple point
 _anchor setPosWorld _grappelPoint;
-
-// If we didn't find a grapple point, let it fall
-if (!_isAttached) then {
-    _anchor enableSimulation true;
-    _anchor setFuel 0;
-    _anchor setDamage 0.95;
-};
 
 // store information in the anchor so we can reuse it later
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];
