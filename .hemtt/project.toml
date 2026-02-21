@@ -25,7 +25,6 @@ workshop = [
     "730310357", # Advanced urban rapelling
     "623475643", # 3DEN Enhanced
     "1779063631", # Zeus Enhanced
-     "463939057", # ACE
 ]
 parameters = [
     "-window",
@@ -34,3 +33,8 @@ parameters = [
 ]
 mission = "test.VR"
 
+[hemtt.launch.ace]
+extends = "default"
+workshop = [
+    "463939057", # ACE
+]
