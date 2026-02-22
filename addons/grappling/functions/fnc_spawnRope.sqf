@@ -75,7 +75,6 @@ _permRope allowDamage false;
 // Move the anchor to the grapple point now that the rope segments are initialized.
 _anchor setPosWorld _grappelPoint;
 
-// Attached: anchor stays in place with simulation enabled (segments already rendered).
 // Unattached: disable engine sound and let the anchor fall to the ground.
 if (!_isAttached) then {
     hintSilent "Hook did not attach properly";

@@ -27,7 +27,6 @@ workshop = [
     "1779063631", # Zeus Enhanced
 ]
 parameters = [
-    "-window",
     "-noPause",
     "-noPauseAudio",
 ]
@@ -37,4 +36,10 @@ mission = "test.VR"
 extends = "default"
 workshop = [
     "463939057", # ACE
+]
+
+[hemtt.launch.windowed]
+extends = "ace"
+parameters = [
+    "-window",
 ]
