@@ -1,23 +1,25 @@
 #include "script_component.hpp"
 
 /*
- * place a rope from the player position to the provided _projectile
+ * Tracks a grappling hook projectile in flight, then creates a permanent rope
+ * anchored to the nearest valid surface at the landing position.
+ * If no surface is found, the rope falls freely from the landing point.
  */
 
 params ["_player","_projectile", "_magazine"];
 
-// create hidden vehicle that we can attach a rope to.
+// Create a temporary hidden UAV to follow the projectile and carry a visual rope during flight.
 _hook = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 hideObject _hook;
-hideObjectGlobal _hook;
+[_hook] remoteExec ["hideObjectGlobal", 2];
 _hook allowDamage false;
 [[_hook],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
-// attach a rope to the hook
+// Attach a visual rope to the tracking hook so the rope appears to trail during flight.
 _rope = ropeCreate [_hook, [0,0,0], 100];
 _rope allowDamage false;
 
-// update the hook position to match the projectile position
+// Each frame, move the tracking hook to the projectile position until it disappears (lands/expires).
 _finalProjectilePos = getPosASL _player;
 
 waitUntil {
@@ -27,12 +29,11 @@ waitUntil {
 	false;
 };
 
-// initial rope was only for visuals, we need to destroy it when replaced
-// with the advanced_urban_rappelling rope
+// Projectile has landed — destroy the temporary visual rope and tracking hook.
 ropeDestroy _rope;
 deleteVehicle _hook;
 
-// find a rappelpoint near heighest point of the rope
+// Search for a valid surface attachment point near the landing position.
 _grappelData = [_finalProjectilePos, "POSITION"] call FUNC(findRappelPoint);
 
 private _isAttached = true;
@@ -50,30 +51,32 @@ if (count _grappelData == 0) then {
 // Rope length is just shortest path between _grappelPoint and player, with some extra buffer
 _ropeLength = (_grappelPoint distance getPosASL _player) + 5;
 
-// create a new anchor at the player.
+// Create the permanent anchor. Starts at the player position so the rope
+// can be created stretched downward, then moved to the grapple point.
 _anchor = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 _anchor allowDamage false;
 hideObject _anchor;
-hideObjectGlobal _anchor;
+[_anchor] remoteExec ["hideObjectGlobal", 2];
 [[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
-// Create a temporary target at the player to pull the rope to them
+// Create a temporary object at the player so ropeCreate stretches the rope downward.
+// Without this, the rope would collapse at the anchor position before being moved.
 _tempTarget = createVehicle ["Land_Can_V2_F", _player, [], 0, "CAN_COLLIDE"];
 _tempTarget allowDamage false;
 hideObject _tempTarget;
-hideObjectGlobal _tempTarget;
+[_tempTarget] remoteExec ["hideObjectGlobal", 2];
 [[_tempTarget],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
-// Create the rope between anchor and temp target
-// This ensures the rope is "stretched" to the player at creation
+// Create the permanent rope while the anchor is still at the player position.
+// Simulation must be enabled at this point for rope segments to render correctly.
 _permRope = ropeCreate [_anchor, [0, 0, 0], _tempTarget, [0, 0, 0], _ropeLength];
 _permRope allowDamage false;
 
-// Now move the anchor to the grapple point
+// Move the anchor to the grapple point now that the rope segments are initialized.
 _anchor setPosWorld _grappelPoint;
 
-// If attached: freeze anchor in place (simulation must be enabled during ropeCreate for segments to render)
-// If not attached: let anchor fall with physics
+// Attached: anchor stays in place with simulation enabled (segments already rendered).
+// Unattached: disable engine sound and let the anchor fall to the ground.
 if (!_isAttached) then {
     hintSilent "Hook did not attach properly";
     _anchor engineOn false;
@@ -81,12 +84,12 @@ if (!_isAttached) then {
     _anchor setFuel 0;
 };
 
-// store information in the anchor so we can reuse it later
+// Store metadata on the anchor for use by rappel and pickup functions.
 _anchor setVariable ["AG_is_Grappling_Anchor", true, true];
 _anchor setVariable ["AG_is_Attached", _isAttached, true];
 _anchor setVariable ["AG_Grapple_Direction", _grappelDirection, true];
 _anchor setVariable ["AG_Grapple_Length", _ropeLength, true];
 _anchor setVariable ["AG_Grapple_Magazine", _magazine, true];
 
-// Delete the temp target to leave the rope free-ended at the player's position
+// Remove the temp target — rope end is now free-hanging at the player's position.
 deleteVehicle _tempTarget;

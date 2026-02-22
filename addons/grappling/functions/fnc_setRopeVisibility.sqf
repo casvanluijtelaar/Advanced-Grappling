@@ -19,7 +19,7 @@ if (!local _anchor) exitWith {
     private _rope = _x;
     if (!isNull _rope) then {
         {
-            // hideObjectGlobal must be executed on the server
+            // Execute hideObjectGlobal from the server so it propagates reliably to all clients.
             if (!isNull _x) then {
                 [_x, !_visible] remoteExec ["hideObjectGlobal", 2];
             };

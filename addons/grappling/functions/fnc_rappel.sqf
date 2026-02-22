@@ -32,8 +32,10 @@ _anchor allowDamage false;
 [[_anchor],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
 
 // Create rappel device (attached to player)
+// Note: AUR_Hide_Object_Global only handles Land_Can_V2_F/B_static_AA_F, so B_UAV_01_F needs an explicit server-side hideObjectGlobal.
 _rappelDevice = createVehicle ["B_UAV_01_F", _player, [], 0, "CAN_COLLIDE"];
 hideObject _rappelDevice;
+[_rappelDevice] remoteExec ["hideObjectGlobal", 2];
 _rappelDevice setPosWorld _playerStartPosition;
 _rappelDevice allowDamage false;
 [[_rappelDevice],"AUR_Hide_Object_Global"] call AUR_RemoteExecServer;
